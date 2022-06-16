@@ -1,0 +1,12 @@
+
+<div *ngFor="let kv of (data | keyvalue)">
+    <div [ngStyle]="{'margin-left': '2rem'}" [ngSwitch]="getType(kv.value | json)">
+        <details *ngSwitchCase="'object'"> 
+            <summary><b>{{kv.key}}</b> <button [ngStyle]="{'margin-left': '2rem'}" (click)="addNewProperty(kv.key)"> + </button></summary>
+            <app-object-tree-renderer [data]="data[kv.key | toString]" [parent]="getCompositeName(parent,kv.key)"></app-object-tree-renderer>
+        </details>
+        <div *ngSwitchDefault>{{kv.key}} <input [(ngModel)]="kv.value" 
+            (change)="handleValueChange(getCompositeName(parent,kv.key), kv.value)"></div>
+        <br>
+    </div>    
+</div>
